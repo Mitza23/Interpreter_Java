@@ -1,0 +1,153 @@
+ExeStack:
+	(bool a;;(int v;;(a=bool: true;;((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v)))))
+
+SymTbl:
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	bool a;
+	(int v;;(a=bool: true;;((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v))))
+
+SymTbl:
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	(int v;;(a=bool: true;;((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v))))
+
+SymTbl:
+a --> bool: false
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	int v;
+	(a=bool: true;;((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v)))
+
+SymTbl:
+a --> bool: false
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	(a=bool: true;;((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v)))
+
+SymTbl:
+a --> bool: false
+v --> int: 0
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	a=bool: true;
+	((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v))
+
+SymTbl:
+a --> bool: false
+v --> int: 0
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	((IF(a) THEN(v=int: 2;)ELSE(v=int: 3;));print(v))
+
+SymTbl:
+a --> bool: true
+v --> int: 0
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	(IF(a) THEN(v=int: 2;)ELSE(v=int: 3;))
+	print(v)
+
+SymTbl:
+a --> bool: true
+v --> int: 0
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	v=int: 2;
+	print(v)
+
+SymTbl:
+a --> bool: true
+v --> int: 0
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+	print(v)
+
+SymTbl:
+a --> bool: true
+v --> int: 2
+
+Out:
+
+
+
+=====================
+
+
+ExeStack:
+
+SymTbl:
+a --> bool: true
+v --> int: 2
+
+Out:
+int: 2
+
+
+
+=====================
+
+
