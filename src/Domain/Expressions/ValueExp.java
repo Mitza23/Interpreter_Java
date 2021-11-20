@@ -1,6 +1,7 @@
 package Domain.Expressions;
 
 import Domain.ADT.MyIDictionary;
+import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Values.IntValue;
 import Domain.Values.Value;
@@ -12,7 +13,7 @@ public class ValueExp implements Exp{
         e = v;
     }
 
-    public Value eval(MyIDictionary<String, Value> tbl) throws MyException {
+    public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
         return e;
     }
 

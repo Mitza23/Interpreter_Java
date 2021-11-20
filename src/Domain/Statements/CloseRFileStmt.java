@@ -26,11 +26,11 @@ public class CloseRFileStmt implements IStmt{
     public PrgState execute(PrgState state) throws MyException {
         MyIDictionary<String, BufferedReader> fileTbl = state.getFileTable();
         MyIDictionary<String, Value> symTbl = state.getSymTable();
-        if(!(exp.eval(symTbl) instanceof StringValue)){
+        if(!(exp.eval(symTbl, state.getHeap()) instanceof StringValue)){
             throw new MyException("The expression must evaluate to a string");
         }
         else{
-            String fileName = ((StringValue) exp.eval(symTbl)).getVal();
+            String fileName = ((StringValue) exp.eval(symTbl, state.getHeap())).getVal();
             if(!fileTbl.isDefined(fileName)){
                 throw new MyException("File is not defined");
             }

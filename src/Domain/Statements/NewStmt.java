@@ -1,6 +1,8 @@
 package Domain.Statements;
 
+import Domain.ADT.MyHeap;
 import Domain.ADT.MyIDictionary;
+import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
@@ -26,9 +28,10 @@ public class NewStmt implements IStmt{
     @Override
     public PrgState execute(PrgState state) throws MyException {
         MyIDictionary<String, Value> symtbl = state.getSymTable();
+        MyIHeap heap = state.getHeap();
         if(symtbl.isDefined(var_name)){
             if(symtbl.lookup(var_name) instanceof RefValue) {
-                Value val = exp.eval(symtbl);
+                Value val = exp.eval(symtbl, heap);
                 if(val.getType().equals(((RefValue) symtbl.lookup(var_name)).getLocationType())){
                     int addr = state.getHeap().addEntry(val);
                     symtbl.update(var_name, new RefValue(addr, val.getType()));

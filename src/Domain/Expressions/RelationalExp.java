@@ -1,6 +1,8 @@
 package Domain.Expressions;
 
+import Domain.ADT.MyHeap;
 import Domain.ADT.MyIDictionary;
+import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Types.IntType;
 import Domain.Values.BoolValue;
@@ -26,11 +28,11 @@ public class RelationalExp implements Exp{
     }
 
     @Override
-    public Value eval(MyIDictionary<String, Value> tbl) throws MyException {
+    public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
         Value v1, v2;
-        v1= e1.eval(tbl);
+        v1= e1.eval(tbl, heap);
         if (v1.getType().equals(new IntType())) {
-            v2 = e2.eval(tbl);
+            v2 = e2.eval(tbl, heap);
             if (v2.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue) v1;
                 IntValue i2 = (IntValue) v2;

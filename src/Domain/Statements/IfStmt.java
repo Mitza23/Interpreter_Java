@@ -19,7 +19,7 @@ public class IfStmt implements IStmt{
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        Value v= exp.eval(state.getSymTable());
+        Value v= exp.eval(state.getSymTable(), state.getHeap());
         if(v instanceof BoolValue){
             boolean cond = ((BoolValue) v).getVal();
             if (cond){

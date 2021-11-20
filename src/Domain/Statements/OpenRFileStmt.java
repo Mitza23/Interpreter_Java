@@ -24,8 +24,8 @@ public class OpenRFileStmt implements IStmt{
     public PrgState execute(PrgState state) throws MyException {
         MyIDictionary<String, Value> symTbl = state.getSymTable();
         MyIDictionary<String, BufferedReader> fileTbl = state.getFileTable();
-        if(exp.eval(symTbl)instanceof StringValue){
-            String name = ((StringValue) exp.eval(symTbl)).getVal();
+        if(exp.eval(symTbl, state.getHeap())instanceof StringValue){
+            String name = ((StringValue) exp.eval(symTbl, state.getHeap())).getVal();
             if(!fileTbl.isDefined(name)){
                 try {
                     BufferedReader buff = new BufferedReader(new FileReader(name));

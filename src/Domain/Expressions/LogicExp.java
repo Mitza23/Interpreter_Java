@@ -1,6 +1,7 @@
 package Domain.Expressions;
 
 import Domain.ADT.MyIDictionary;
+import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Types.BoolType;
 import Domain.Types.IntType;
@@ -18,11 +19,11 @@ public class LogicExp implements Exp{
         this.op = op;
     }
 
-    public Value eval(MyIDictionary<String, Value> tbl) throws MyException {
+    public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
         Value v1, v2;
-        v1 = e1.eval(tbl);
+        v1 = e1.eval(tbl, heap);
         if (v1.getType().equals(new BoolType())){
-            v2 = e2.eval(tbl);
+            v2 = e2.eval(tbl, heap);
             if (v2.getType().equals(new BoolType())){
                 BoolValue b1 = (BoolValue) v1;
                 BoolValue b2 = (BoolValue) v2;

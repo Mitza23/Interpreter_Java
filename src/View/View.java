@@ -4,6 +4,7 @@ import Controller.Controller;
 import Domain.ADT.*;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.ArithExp;
+import Domain.Expressions.ReadHeapExp;
 import Domain.Expressions.ValueExp;
 import Domain.Expressions.VarExp;
 import Domain.PrgState;
@@ -176,6 +177,45 @@ public class View {
                                 new CompStmt(new NewStmt("a", new VarExp("v")),
                                         new CompStmt(new PrintStmt(new VarExp("v")),
                                                 new PrintStmt(new VarExp("a")))))));
+        controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
+        stack.push(stmt);
+        controller.setLogFile("log.txt");
+        controller.allStep();
+    }
+
+    public void testHeapReading(){
+        MyIStack<IStmt> stack = new MyStack<IStmt>();
+        MyIDictionary<String, Value> symtbl = new MyDictionary<String, Value>();
+        MyIList<Value> out = new MyList<Value>();
+        MyIDictionary<String, BufferedReader> filetbl = new MyDictionary<String, BufferedReader>();
+        MyIHeap heap = new MyHeap();
+        IStmt stmt = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompStmt(new NewStmt("a", new VarExp("v")),
+                                        new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                                new PrintStmt(new ArithExp('+', new ReadHeapExp(new ReadHeapExp(new VarExp("a"))),
+                                                        new ValueExp(new IntValue(5)))))))));
+
+        controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
+        stack.push(stmt);
+        controller.setLogFile("log.txt");
+        controller.allStep();
+    }
+
+    public void testHeapWriting(){
+        MyIStack<IStmt> stack = new MyStack<IStmt>();
+        MyIDictionary<String, Value> symtbl = new MyDictionary<String, Value>();
+        MyIList<Value> out = new MyList<Value>();
+        MyIDictionary<String, BufferedReader> filetbl = new MyDictionary<String, BufferedReader>();
+        MyIHeap heap = new MyHeap();
+        IStmt stmt = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(new PrintStmt(new ReadHeapExp(new VarExp("v"))),
+                                new CompStmt(new WriteHeapStmt("v", new ValueExp(new IntValue(30))),
+                                        new PrintStmt(new ArithExp('+', new ReadHeapExp(new VarExp("v")),
+                                                new ValueExp(new IntValue(5))))))));
+
         controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
         stack.push(stmt);
         controller.setLogFile("log.txt");

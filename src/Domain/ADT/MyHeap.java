@@ -39,11 +39,34 @@ public class MyHeap implements MyIHeap{
     }
 
     @Override
+    public boolean isDefined(int address) {
+        return map.get(address) != null;
+    }
+
+    @Override
     public MyIHeap clone() {
         HashMap<Integer, Value> clone = new HashMap<Integer, Value>();
         for(Map.Entry<Integer, Value> entry : map.entrySet()){
             clone.put(entry.getKey(), entry.getValue().clone());
         }
         return new MyHeap(clone, position);
+    }
+
+    public void update(int address, Value value){
+        map.replace(address, value);
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder r = new StringBuilder("Heap:\n");
+        for (HashMap.Entry<Integer, Value> p : map.entrySet()){
+            r.append(p.getKey().toString() + " --> " + p.getValue().toString() + "\n");
+        }
+        return r.toString();
+    }
+
+    @Override
+    public void setContent(HashMap<Integer, Value> map) {
+        this.map = map;
     }
 }

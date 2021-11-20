@@ -27,8 +27,8 @@ public class ReadFileStmt implements IStmt{
         MyIDictionary<String, Value> symTbl = state.getSymTable();
         if(symTbl.isDefined(var_name)){
             if(symTbl.lookup(var_name).getType().equals(new IntType())){
-                if(exp.eval(symTbl) instanceof StringValue){
-                    String name = ((StringValue) exp.eval(symTbl)).getVal();
+                if(exp.eval(symTbl, state.getHeap()) instanceof StringValue){
+                    String name = ((StringValue) exp.eval(symTbl, state.getHeap())).getVal();
                     if(!fileTbl.isDefined(name))
                         throw new MyException("File not opened");
                     BufferedReader buff = fileTbl.lookup(name);

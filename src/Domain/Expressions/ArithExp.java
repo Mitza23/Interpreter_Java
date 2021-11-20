@@ -1,6 +1,7 @@
 package Domain.Expressions;
 
 import Domain.ADT.MyIDictionary;
+import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Types.IntType;
 import Domain.Values.IntValue;
@@ -18,13 +19,14 @@ public class ArithExp implements Exp{
         if("+/*-".indexOf(op) == -1) {
                 throw new MyException("Invalid operator!");
         }
+        this.op = op;
     }
 
-    public Value eval(MyIDictionary<String, Value> tbl) throws MyException {
+    public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
         Value v1, v2;
-        v1= e1.eval(tbl);
+        v1= e1.eval(tbl, heap);
         if (v1.getType().equals(new IntType())) {
-            v2 = e2.eval(tbl);
+            v2 = e2.eval(tbl, heap);
             if (v2.getType().equals(new IntType())) {
                 IntValue i1 = (IntValue)v1;
                 IntValue i2 = (IntValue)v2;
@@ -63,7 +65,7 @@ public class ArithExp implements Exp{
         } catch (MyException e) {
             return new Exp() {
                 @Override
-                public Value eval(MyIDictionary<String, Value> tbl) throws MyException {
+                public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
                     return null;
                 }
 

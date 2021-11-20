@@ -79,6 +79,9 @@ public class PrgState implements Clonable<PrgState> {
         r.append("\n");
         r.append(out.toString());
         r.append("\n");
+        r.append(fileTable.toString());
+        r.append("\n");
+        r.append(heap.toString());
         return r.toString();
     }
 

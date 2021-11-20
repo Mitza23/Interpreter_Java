@@ -1,6 +1,7 @@
 package Domain.Expressions;
 
 import Domain.ADT.MyIDictionary;
+import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Values.Value;
 
@@ -11,8 +12,11 @@ public class VarExp implements Exp{
         id = v;
     }
 
-    public Value eval(MyIDictionary<String, Value> tbl) throws MyException {
-        return tbl.lookup(id);
+    public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
+        if(tbl.isDefined(id))
+            return tbl.lookup(id);
+        else
+            throw new MyException("Variable " + id + " not defined");
     }
 
     @Override
