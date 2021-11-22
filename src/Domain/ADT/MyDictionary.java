@@ -1,7 +1,6 @@
 package Domain.ADT;
 
 import Domain.Clonable;
-import Domain.Values.Value;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -53,11 +52,16 @@ public class MyDictionary<K, V> implements MyIDictionary<K, V> {
         for (Map.Entry<K, V> entry : map.entrySet()) {
             K key = entry.getKey();
             V value = entry.getValue();
-            if (value instanceof Clonable){
+            if (value instanceof Clonable) {
                 value = ((Clonable<V>) value).clone();
             }
             clone.put(key, value);
         }
         return clone;
+    }
+
+    @Override
+    public Map<K, V> getContent() {
+        return map;
     }
 }

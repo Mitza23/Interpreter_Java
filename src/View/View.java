@@ -3,17 +3,17 @@ package View;
 import Controller.Controller;
 import Domain.ADT.*;
 import Domain.Exceptions.MyException;
-import Domain.Expressions.ArithExp;
-import Domain.Expressions.ReadHeapExp;
-import Domain.Expressions.ValueExp;
-import Domain.Expressions.VarExp;
+import Domain.Expressions.*;
 import Domain.PrgState;
 import Domain.Statements.*;
 import Domain.Types.BoolType;
 import Domain.Types.IntType;
 import Domain.Types.RefType;
 import Domain.Types.StringType;
-import Domain.Values.*;
+import Domain.Values.BoolValue;
+import Domain.Values.IntValue;
+import Domain.Values.StringValue;
+import Domain.Values.Value;
 import Repository.Repository;
 
 import java.io.BufferedReader;
@@ -222,7 +222,49 @@ public class View {
         controller.allStep();
     }
 
-    public void start(){
+    public void testGarbageCollector() {
+        MyIStack<IStmt> stack = new MyStack<IStmt>();
+        MyIDictionary<String, Value> symtbl = new MyDictionary<String, Value>();
+        MyIList<Value> out = new MyList<Value>();
+        MyIDictionary<String, BufferedReader> filetbl = new MyDictionary<String, BufferedReader>();
+        MyIHeap heap = new MyHeap();
+        IStmt stmt = new CompStmt(new VarDeclStmt("v", new RefType(new IntType())),
+                new CompStmt(new NewStmt("v", new ValueExp(new IntValue(20))),
+                        new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
+                                new CompStmt(new NewStmt("a", new VarExp("v")),
+                                        new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
+                                                new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))))))));
+        controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
+        stack.push(stmt);
+        controller.setLogFile("log.txt");
+        controller.setDisplayFlag(true);
+        controller.allStep();
+
+    }
+
+    public void testWhileStmt() {
+        MyIStack<IStmt> stack = new MyStack<IStmt>();
+        MyIDictionary<String, Value> symtbl = new MyDictionary<String, Value>();
+        MyIList<Value> out = new MyList<Value>();
+        MyIDictionary<String, BufferedReader> filetbl = new MyDictionary<String, BufferedReader>();
+        MyIHeap heap = new MyHeap();
+        IStmt stmt = new CompStmt(new VarDeclStmt("v", new IntType()),
+                new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(4))),
+                        new CompStmt(new WhileStmt(new RelationalExp(new VarExp("v"),
+                                new ValueExp(new IntValue(0)), ">"),
+                                new CompStmt(new PrintStmt(new VarExp("v")),
+                                        new AssignStmt("v", new ArithExp('-', new VarExp("v"),
+                                                new ValueExp(new IntValue(1)))))),
+                                new PrintStmt(new VarExp("v")))));
+
+        controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
+        stack.push(stmt);
+        controller.setLogFile("log.txt");
+        controller.setDisplayFlag(true);
+        controller.allStep();
+    }
+
+    public void start() {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {

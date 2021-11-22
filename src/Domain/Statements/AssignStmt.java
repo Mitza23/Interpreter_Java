@@ -4,9 +4,7 @@ import Domain.ADT.MyIDictionary;
 import Domain.ADT.MyIStack;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
-import Domain.Expressions.ValueExp;
 import Domain.PrgState;
-import Domain.Types.StringType;
 import Domain.Types.Type;
 import Domain.Values.Value;
 
@@ -20,7 +18,7 @@ public class AssignStmt implements IStmt{
     }
 
     public String toString(){
-        return id+"="+ exp.toString() + ";";
+        return id + " = " + exp.toString() + ";";
 
     }
     public PrgState execute(PrgState state) throws MyException{

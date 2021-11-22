@@ -1,10 +1,6 @@
 package Repository;
 
-import Domain.ADT.MyIStack;
-import Domain.ADT.MyStack;
-import Domain.Exceptions.MyException;
 import Domain.PrgState;
-import Domain.Statements.IStmt;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;
@@ -43,12 +39,14 @@ public class Repository implements IRepository{
 
     @Override
     public void logPrgStateExec() throws IOException {
-       PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, true)));
-       logFile.println(getCrtPrg().getStk());
-       logFile.println(getCrtPrg().getSymTable());
-       logFile.println(getCrtPrg().getOut());
-       logFile.println("\n\n=====================\n\n");
-       logFile.flush();
+        PrintWriter logFile = new PrintWriter(new BufferedWriter(new FileWriter(logFilePath, false)));
+        logFile.println(getCrtPrg().getStk());
+        logFile.println(getCrtPrg().getSymTable());
+        logFile.println(getCrtPrg().getOut());
+        logFile.println(getCrtPrg().getFileTable());
+        logFile.println(getCrtPrg().getHeap());
+        logFile.println("\n\n=====================\n\n");
+        logFile.flush();
     }
 
     public String getLogFilePath() {

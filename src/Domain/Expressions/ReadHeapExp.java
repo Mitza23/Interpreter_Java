@@ -23,12 +23,16 @@ public class ReadHeapExp implements Exp{
         if(exp.eval(tbl, heap) instanceof RefValue){
             int addr = ((RefValue) exp.eval(tbl, heap)).getAddr();
             Value v = heap.getValue(addr);
-            if(v == null){
+            if (v == null) {
                 throw new MyException("Address " + addr + " does not exist in the heap");
             }
             return v;
-        }
-        else
+        } else
             throw new MyException("Expression is not a RefValue");
+    }
+
+    @Override
+    public String toString() {
+        return "ReadHeapExp(" + exp + ')';
     }
 }

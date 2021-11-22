@@ -1,14 +1,11 @@
 package Domain.Statements;
 
-import Domain.ADT.MyHeap;
 import Domain.ADT.MyIDictionary;
 import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
-import Domain.Types.RefType;
 import Domain.Values.RefValue;
-import Domain.Values.StringValue;
 import Domain.Values.Value;
 
 public class NewStmt implements IStmt{
@@ -36,15 +33,17 @@ public class NewStmt implements IStmt{
                     int addr = state.getHeap().addEntry(val);
                     symtbl.update(var_name, new RefValue(addr, val.getType()));
                     return state;
-                }
-                else
+                } else
                     throw new MyException("Incompatible types: " + val.getType() + " and " +
                             ((RefValue) symtbl.lookup(var_name)).getLocationType());
-            }
-            else
+            } else
                 throw new MyException(var_name + "is not a refference");
-        }
-        else
+        } else
             throw new MyException(var_name + "is not defined");
+    }
+
+    @Override
+    public String toString() {
+        return "NewStmt(" + var_name + " : " + exp + ')';
     }
 }

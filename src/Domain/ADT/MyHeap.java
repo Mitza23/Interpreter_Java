@@ -1,6 +1,5 @@
 package Domain.ADT;
 
-import Domain.Types.Type;
 import Domain.Values.Value;
 
 import java.util.HashMap;
@@ -59,7 +58,7 @@ public class MyHeap implements MyIHeap{
     @Override
     public String toString() {
         StringBuilder r = new StringBuilder("Heap:\n");
-        for (HashMap.Entry<Integer, Value> p : map.entrySet()){
+        for (HashMap.Entry<Integer, Value> p : map.entrySet()) {
             r.append(p.getKey().toString() + " --> " + p.getValue().toString() + "\n");
         }
         return r.toString();
@@ -68,5 +67,10 @@ public class MyHeap implements MyIHeap{
     @Override
     public void setContent(HashMap<Integer, Value> map) {
         this.map = map;
+    }
+
+    @Override
+    public HashMap<Integer, Value> getContent() {
+        return map;
     }
 }
