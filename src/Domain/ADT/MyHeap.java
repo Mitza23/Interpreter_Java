@@ -21,14 +21,18 @@ public class MyHeap implements MyIHeap{
 
     @Override
     public int nextFree() {
-        return position;
+        for (int i = 1; i <= position; i++) {
+            if (!isDefined(i))
+                return i;
+        }
+        position++;
+        return position - 1;
     }
 
     @Override
     public int addEntry(Value value) {
         int p = nextFree();
         map.put(p, value);
-        position ++;
         return p;
     }
 

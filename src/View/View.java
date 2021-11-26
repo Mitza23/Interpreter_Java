@@ -180,6 +180,7 @@ public class View {
         controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
         stack.push(stmt);
         controller.setLogFile("log.txt");
+        controller.setDisplayFlag(true);
         controller.allStep();
     }
 
@@ -233,7 +234,9 @@ public class View {
                         new CompStmt(new VarDeclStmt("a", new RefType(new RefType(new IntType()))),
                                 new CompStmt(new NewStmt("a", new VarExp("v")),
                                         new CompStmt(new NewStmt("v", new ValueExp(new IntValue(30))),
-                                                new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))))))));
+                                                new CompStmt(new PrintStmt(new ReadHeapExp(new ReadHeapExp(new VarExp("a")))),
+                                                        new CompStmt(new NewStmt("v", new ValueExp(new IntValue(40))),
+                                                                new PrintStmt(new ReadHeapExp(new VarExp("v"))))))))));
         controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
         stack.push(stmt);
         controller.setLogFile("log.txt");
