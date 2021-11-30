@@ -58,7 +58,7 @@ public class ReadFileStmt implements IStmt{
         else{
             throw new MyException(var_name + "is not defined");
         }
-        return state;
+        return null;
     }
 
     @Override

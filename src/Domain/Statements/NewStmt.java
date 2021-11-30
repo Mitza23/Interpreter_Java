@@ -32,7 +32,7 @@ public class NewStmt implements IStmt{
                 if(val.getType().equals(((RefValue) symtbl.lookup(var_name)).getLocationType())){
                     int addr = state.getHeap().addEntry(val);
                     symtbl.update(var_name, new RefValue(addr, val.getType()));
-                    return state;
+                    return null;
                 } else
                     throw new MyException("Incompatible types: " + val.getType() + " and " +
                             ((RefValue) symtbl.lookup(var_name)).getLocationType());

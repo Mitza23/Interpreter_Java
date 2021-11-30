@@ -1,11 +1,9 @@
 package Domain.Statements;
 
-import Domain.ADT.MyDictionary;
 import Domain.ADT.MyIDictionary;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
-import Domain.Types.StringType;
 import Domain.Values.StringValue;
 import Domain.Values.Value;
 
@@ -41,7 +39,7 @@ public class OpenRFileStmt implements IStmt{
         else
             throw new MyException("File name must be a string");
 
-        return state;
+        return null;
     }
 
     @Override

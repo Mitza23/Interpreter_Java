@@ -3,11 +3,7 @@ package Domain.Statements;
 import Domain.ADT.MyIDictionary;
 import Domain.Exceptions.MyException;
 import Domain.PrgState;
-import Domain.Types.BoolType;
-import Domain.Types.IntType;
 import Domain.Types.Type;
-import Domain.Values.BoolValue;
-import Domain.Values.IntValue;
 import Domain.Values.Value;
 
 public class VarDeclStmt  implements IStmt{
@@ -26,7 +22,7 @@ public class VarDeclStmt  implements IStmt{
             throw new MyException("Symbol already defined");
         }
         symtbl.put(name, typ.getDefault());
-        return state;
+        return null;
     }
 
     @Override

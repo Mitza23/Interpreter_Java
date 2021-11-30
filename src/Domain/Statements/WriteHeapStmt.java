@@ -4,8 +4,6 @@ import Domain.ADT.MyIDictionary;
 import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
-import Domain.Expressions.ReadHeapExp;
-import Domain.Expressions.ValueExp;
 import Domain.PrgState;
 import Domain.Values.RefValue;
 import Domain.Values.Value;
@@ -37,19 +35,24 @@ public class WriteHeapStmt implements IStmt{
                    Value expEval = exp.eval(symtbl, heap);
                    if(expEval.getType().equals(((RefValue) v).getLocationType())){
                         heap.update(addr, expEval);
-                        return state;
+                        return null;
                    }
                    else
                        throw new MyException("Incompatible types " + expEval.getType() + " and " +
                                ((RefValue) v).getLocationType());
-               }
-               else
+               } else
                    throw new MyException("Address " + addr + " is not referenced");
-           }
-           else
+           } else
                throw new MyException("Variable " + varName + " it's not a RefValue");
-       }
-       else
+       } else
            throw new MyException("Variable " + varName + " not defined");
+    }
+
+    @Override
+    public String toString() {
+        return "WriteHeapStmt(" +
+                varName +
+                " <- " + exp +
+                ')';
     }
 }

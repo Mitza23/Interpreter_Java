@@ -2,7 +2,6 @@ package Domain.Statements;
 
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
-import Domain.Expressions.VarExp;
 import Domain.PrgState;
 
 public class PrintStmt implements IStmt{
@@ -18,7 +17,7 @@ public class PrintStmt implements IStmt{
 
     public PrgState execute(PrgState state) throws MyException {
         state.getOut().add(exp.eval(state.getSymTable(), state.getHeap()));
-        return state;
+        return null;
     }
 
     public IStmt clone(){

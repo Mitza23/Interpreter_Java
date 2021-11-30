@@ -6,7 +6,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MyHeap implements MyIHeap{
-    HashMap<Integer, Value> map;
+    Map<Integer, Value> map;
     int position;
 
     public MyHeap() {
@@ -14,7 +14,7 @@ public class MyHeap implements MyIHeap{
         this.position = 1;
     }
 
-    public MyHeap(HashMap<Integer, Value> map, int position) {
+    public MyHeap(Map<Integer, Value> map, int position) {
         this.map = map;
         this.position = position;
     }
@@ -69,12 +69,12 @@ public class MyHeap implements MyIHeap{
     }
 
     @Override
-    public void setContent(HashMap<Integer, Value> map) {
+    public void setContent(Map<Integer, Value> map) {
         this.map = map;
     }
 
     @Override
-    public HashMap<Integer, Value> getContent() {
+    public Map<Integer, Value> getContent() {
         return map;
     }
 }

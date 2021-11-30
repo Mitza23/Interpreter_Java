@@ -267,6 +267,31 @@ public class View {
         controller.allStep();
     }
 
+    public void testForkStmt() {
+        MyIStack<IStmt> stack = new MyStack<IStmt>();
+        MyIDictionary<String, Value> symtbl = new MyDictionary<String, Value>();
+        MyIList<Value> out = new MyList<Value>();
+        MyIDictionary<String, BufferedReader> filetbl = new MyDictionary<String, BufferedReader>();
+        MyIHeap heap = new MyHeap();
+        IStmt stmt = new CompStmt(new VarDeclStmt("v", new IntType()),
+                new CompStmt(new VarDeclStmt("a", new RefType(new IntType())),
+                        new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(10))),
+                                new CompStmt(new NewStmt("a", new ValueExp(new IntValue(22))),
+                                        new CompStmt(
+                                                new ForkStmt(new CompStmt(new WriteHeapStmt("a", new ValueExp(new IntValue(30))),
+                                                        new CompStmt(new AssignStmt("v", new ValueExp(new IntValue(32))),
+                                                                new CompStmt(new PrintStmt(new VarExp("v")),
+                                                                        new PrintStmt(new ReadHeapExp(new VarExp("a"))))))),
+                                                new CompStmt(new PrintStmt(new VarExp("v")),
+                                                        new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
+
+        controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
+        stack.push(stmt);
+        controller.setLogFile("log.txt");
+        controller.setDisplayFlag(true);
+        controller.allStep();
+    }
+
     public void start() {
         Scanner scanner = new Scanner(System.in);
         while (true) {

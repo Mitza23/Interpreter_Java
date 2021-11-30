@@ -3,7 +3,7 @@ package Domain.ADT;
 import Domain.Clonable;
 import Domain.Values.Value;
 
-import java.util.HashMap;
+import java.util.Map;
 
 public interface MyIHeap extends Clonable<MyIHeap> {
     int nextFree();
@@ -16,7 +16,7 @@ public interface MyIHeap extends Clonable<MyIHeap> {
 
     void update(int address, Value value);
 
-    void setContent(HashMap<Integer, Value> map);
+    void setContent(Map<Integer, Value> map);
 
-    HashMap<Integer, Value> getContent();
+    Map<Integer, Value> getContent();
 }

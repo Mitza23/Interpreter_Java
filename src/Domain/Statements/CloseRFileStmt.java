@@ -45,7 +45,7 @@ public class CloseRFileStmt implements IStmt{
                 fileTbl.remove(fileName);
             }
         }
-        return state;
+        return null;
     }
 
     @Override

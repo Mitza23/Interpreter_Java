@@ -37,7 +37,7 @@ public class WhileStmt implements IStmt {
             }
         } else
             throw new MyException(exp + " must be evaluated to a BoolValue");
-        return state;
+        return null;
     }
 
     @Override
