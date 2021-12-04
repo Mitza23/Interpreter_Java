@@ -1,10 +1,11 @@
 package Domain.Expressions;
 
-import Domain.ADT.MyHeap;
 import Domain.ADT.MyIDictionary;
 import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
+import Domain.Types.BoolType;
 import Domain.Types.IntType;
+import Domain.Types.Type;
 import Domain.Values.BoolValue;
 import Domain.Values.IntValue;
 import Domain.Values.Value;
@@ -58,11 +59,25 @@ public class RelationalExp implements Exp{
                     return new BoolValue(n1 >= n2);
                 }
                 throw new MyException("Invalid operator");
-            }
-            else
+            } else
                 throw new MyException("The second expression does not evaluate to an int");
-        }
-        else
+        } else
             throw new MyException("The first expression does not evaluate to an int");
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typ1, typ2;
+        typ1 = e1.typecheck(typeEnv);
+        typ2 = e2.typecheck(typeEnv);
+        if (typ1.equals(new IntType())) {
+            if (typ2.equals(new IntType())) {
+                return new BoolType();
+            } else {
+                throw new MyException("second operand is not an integer");
+            }
+        } else {
+            throw new MyException("first operand is not an integer");
+        }
     }
 }

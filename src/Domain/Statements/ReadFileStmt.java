@@ -5,6 +5,8 @@ import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
 import Domain.Types.IntType;
+import Domain.Types.StringType;
+import Domain.Types.Type;
 import Domain.Values.IntValue;
 import Domain.Values.StringValue;
 import Domain.Values.Value;
@@ -50,15 +52,28 @@ public class ReadFileStmt implements IStmt{
                 else{
                     throw new MyException("File name must be a string");
                 }
-            }
-            else{
+            } else {
                 throw new MyException(var_name + "does not store an integer value");
             }
-        }
-        else{
+        } else {
             throw new MyException(var_name + "is not defined");
         }
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type varType = typeEnv.lookup(var_name);
+        Type expType = exp.typecheck(typeEnv);
+        if (varType.equals(new IntType())) {
+            if (expType.equals(new StringType())) {
+                return typeEnv;
+            } else {
+                throw new MyException("Expression does not evaluate to a String: " + expType);
+            }
+        } else {
+            throw new MyException("Variable is not a Integer: " + varType);
+        }
     }
 
     @Override

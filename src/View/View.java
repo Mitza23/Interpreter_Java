@@ -6,10 +6,7 @@ import Domain.Exceptions.MyException;
 import Domain.Expressions.*;
 import Domain.PrgState;
 import Domain.Statements.*;
-import Domain.Types.BoolType;
-import Domain.Types.IntType;
-import Domain.Types.RefType;
-import Domain.Types.StringType;
+import Domain.Types.*;
 import Domain.Values.BoolValue;
 import Domain.Values.IntValue;
 import Domain.Values.StringValue;
@@ -286,6 +283,7 @@ public class View {
                                                         new PrintStmt(new ReadHeapExp(new VarExp("a")))))))));
 
         controller.addProgram(new PrgState(stack, symtbl, out, filetbl, heap));
+        stmt.typecheck(new MyDictionary<String, Type>());
         stack.push(stmt);
         controller.setLogFile("log.txt");
         controller.setDisplayFlag(true);

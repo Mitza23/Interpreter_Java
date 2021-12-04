@@ -5,6 +5,8 @@ import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
+import Domain.Types.RefType;
+import Domain.Types.Type;
 import Domain.Values.RefValue;
 import Domain.Values.Value;
 
@@ -36,8 +38,7 @@ public class WriteHeapStmt implements IStmt{
                    if(expEval.getType().equals(((RefValue) v).getLocationType())){
                         heap.update(addr, expEval);
                         return null;
-                   }
-                   else
+                   } else
                        throw new MyException("Incompatible types " + expEval.getType() + " and " +
                                ((RefValue) v).getLocationType());
                } else
@@ -46,6 +47,18 @@ public class WriteHeapStmt implements IStmt{
                throw new MyException("Variable " + varName + " it's not a RefValue");
        } else
            throw new MyException("Variable " + varName + " not defined");
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typeVar = typeEnv.lookup(varName);
+        Type typeExp = exp.typecheck(typeEnv);
+        if (typeVar.equals(new RefType(typeExp))) {
+            return typeEnv;
+        } else {
+            throw new MyException("WriteHeap stmt: right hand side and left hand side have different types: "
+                    + typeVar + " != " + typeExp);
+        }
     }
 
     @Override

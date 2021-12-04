@@ -4,6 +4,8 @@ import Domain.ADT.MyIDictionary;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
+import Domain.Types.StringType;
+import Domain.Types.Type;
 import Domain.Values.StringValue;
 import Domain.Values.Value;
 
@@ -38,14 +40,23 @@ public class CloseRFileStmt implements IStmt{
                 BufferedReader buff = fileTbl.lookup(fileName);
                 try {
                     buff.close();
-                }
-                catch (IOException e){
+                } catch (IOException e) {
                     throw new MyException("Error closing the file");
                 }
                 fileTbl.remove(fileName);
             }
         }
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type expType = exp.typecheck(typeEnv);
+        if (expType.equals(new StringType())) {
+            return typeEnv;
+        } else {
+            throw new MyException("Expression does not evaluate to a string: " + expType);
+        }
     }
 
     @Override

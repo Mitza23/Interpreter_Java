@@ -4,6 +4,8 @@ import Domain.ADT.MyIDictionary;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
+import Domain.Types.StringType;
+import Domain.Types.Type;
 import Domain.Values.StringValue;
 import Domain.Values.Value;
 
@@ -32,14 +34,22 @@ public class OpenRFileStmt implements IStmt{
                 catch (FileNotFoundException e){
                     throw new MyException("File not found: " + e.getMessage());
                 }
-            }
-            else
+            } else
                 throw new MyException("File " + name + " already opened");
-        }
-        else
+        } else
             throw new MyException("File name must be a string");
 
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type expType = exp.typecheck(typeEnv);
+        if (expType.equals(new StringType())) {
+            return typeEnv;
+        } else {
+            throw new MyException("Expression does not evaluate to a string: " + expType);
+        }
     }
 
     @Override

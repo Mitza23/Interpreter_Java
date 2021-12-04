@@ -1,8 +1,10 @@
 package Domain.Statements;
 
+import Domain.ADT.MyIDictionary;
 import Domain.ADT.MyIStack;
 import Domain.Exceptions.MyException;
 import Domain.PrgState;
+import Domain.Types.Type;
 
 public class CompStmt implements IStmt {
     IStmt first;
@@ -16,14 +18,22 @@ public class CompStmt implements IStmt {
 
     @Override
     public String toString() {
-        return "("+first.toString() + ";" + second.toString()+")";
+        return "(" + first.toString() + ";" + second.toString() + ")";
     }
 
     public PrgState execute(PrgState state) throws MyException {
-        MyIStack<IStmt> stk=state.getStk();
+        MyIStack<IStmt> stk = state.getStk();
         stk.push(second);
         stk.push(first);
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        //MyIDictionary<String,Type> typEnv1 = first.typecheck(typeEnv);
+        //MyIDictionary<String,Type> typEnv2 = second.typecheck(typEnv1);
+        //return typEnv2;
+        return second.typecheck(first.typecheck(typeEnv));
     }
 
     @Override

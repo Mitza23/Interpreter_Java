@@ -5,6 +5,8 @@ import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
+import Domain.Types.RefType;
+import Domain.Types.Type;
 import Domain.Values.RefValue;
 import Domain.Values.Value;
 
@@ -40,6 +42,17 @@ public class NewStmt implements IStmt{
                 throw new MyException(var_name + "is not a refference");
         } else
             throw new MyException(var_name + "is not defined");
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type varType = typeEnv.lookup(var_name);
+        Type expType = exp.typecheck(typeEnv);
+        if (varType.equals(new RefType(expType)))
+            return typeEnv;
+        else
+            throw new MyException("NEW stmt: right hand side and left hand side have different types: "
+                    + varType + " != " + expType);
     }
 
     @Override

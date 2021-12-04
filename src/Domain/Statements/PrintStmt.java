@@ -1,8 +1,10 @@
 package Domain.Statements;
 
+import Domain.ADT.MyIDictionary;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
+import Domain.Types.Type;
 
 public class PrintStmt implements IStmt{
     Exp exp;
@@ -11,7 +13,7 @@ public class PrintStmt implements IStmt{
         exp = v;
     }
 
-    public String toString(){
+    public String toString() {
         return "print(" + exp.toString() + ")";
     }
 
@@ -20,7 +22,13 @@ public class PrintStmt implements IStmt{
         return null;
     }
 
-    public IStmt clone(){
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        exp.typecheck(typeEnv);
+        return typeEnv;
+    }
+
+    public IStmt clone() {
         return new PrintStmt(exp);
     }
 }

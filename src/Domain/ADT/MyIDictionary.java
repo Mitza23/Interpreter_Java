@@ -16,4 +16,6 @@ public interface MyIDictionary<K, V> extends Clonable<MyIDictionary<K, V>> {
     void remove(K key);
 
     Map<K, V> getContent();
+
+//    MyIDictionary<K, V> clone();
 }

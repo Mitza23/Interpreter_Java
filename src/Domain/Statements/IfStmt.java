@@ -1,8 +1,11 @@
 package Domain.Statements;
 
+import Domain.ADT.MyIDictionary;
 import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
+import Domain.Types.BoolType;
+import Domain.Types.Type;
 import Domain.Values.BoolValue;
 import Domain.Values.Value;
 
@@ -22,14 +25,24 @@ public class IfStmt implements IStmt{
         Value v= exp.eval(state.getSymTable(), state.getHeap());
         if(v instanceof BoolValue){
             boolean cond = ((BoolValue) v).getVal();
-            if (cond){
+            if (cond) {
                 state.getStk().push(thenS);
-            }
-            else {
+            } else {
                 state.getStk().push(elseS);
             }
         }
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typexp = exp.typecheck(typeEnv);
+        if (typexp.equals(new BoolType())) {
+            thenS.typecheck(typeEnv.clone());
+            elseS.typecheck(typeEnv.clone());
+            return typeEnv;
+        } else
+            throw new MyException("The condition of IF has not the type bool");
     }
 
     @Override

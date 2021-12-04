@@ -4,6 +4,7 @@ import Domain.ADT.MyIDictionary;
 import Domain.ADT.MyIHeap;
 import Domain.Exceptions.MyException;
 import Domain.Types.IntType;
+import Domain.Types.Type;
 import Domain.Values.IntValue;
 import Domain.Values.Value;
 
@@ -47,10 +48,26 @@ public class ArithExp implements Exp{
                     default:
                         throw new MyException("Invalid operator");
                 }
-            }else
+            } else
                 throw new MyException("second operand is not an integer");
-        }else
+        } else
             throw new MyException("first operand is not an integer");
+    }
+
+    @Override
+    public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typ1, typ2;
+        typ1 = e1.typecheck(typeEnv);
+        typ2 = e2.typecheck(typeEnv);
+        if (typ1.equals(new IntType())) {
+            if (typ2.equals(new IntType())) {
+                return new IntType();
+            } else {
+                throw new MyException("second operand is not an integer");
+            }
+        } else {
+            throw new MyException("first operand is not an integer");
+        }
     }
 
     @Override
@@ -66,6 +83,11 @@ public class ArithExp implements Exp{
             return new Exp() {
                 @Override
                 public Value eval(MyIDictionary<String, Value> tbl, MyIHeap heap) throws MyException {
+                    return null;
+                }
+
+                @Override
+                public Type typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
                     return null;
                 }
 

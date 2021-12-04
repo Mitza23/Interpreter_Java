@@ -7,6 +7,7 @@ import Domain.Exceptions.MyException;
 import Domain.Expressions.Exp;
 import Domain.PrgState;
 import Domain.Types.BoolType;
+import Domain.Types.Type;
 import Domain.Values.BoolValue;
 import Domain.Values.Value;
 
@@ -38,6 +39,16 @@ public class WhileStmt implements IStmt {
         } else
             throw new MyException(exp + " must be evaluated to a BoolValue");
         return null;
+    }
+
+    @Override
+    public MyIDictionary<String, Type> typecheck(MyIDictionary<String, Type> typeEnv) throws MyException {
+        Type typexp = exp.typecheck(typeEnv);
+        if (typexp.equals(new BoolType())) {
+            stmt.typecheck(typeEnv.clone());
+            return typeEnv;
+        } else
+            throw new MyException("The condition of WHILE has not the type bool");
     }
 
     @Override
