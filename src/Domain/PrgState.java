@@ -1,9 +1,6 @@
 package Domain;
 
-import Domain.ADT.MyIDictionary;
-import Domain.ADT.MyIHeap;
-import Domain.ADT.MyIList;
-import Domain.ADT.MyIStack;
+import Domain.ADT.*;
 import Domain.Exceptions.MyException;
 import Domain.Statements.IStmt;
 import Domain.Values.Value;
@@ -65,6 +62,7 @@ public class PrgState implements Clonable<PrgState> {
         this.out = out;
         this.fileTable = fileTable;
         exeStack.push(stmt);
+        this.heap = new MyHeap();
     }
 
     public MyIStack<IStmt> getStk(){

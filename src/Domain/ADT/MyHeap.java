@@ -26,7 +26,7 @@ public class MyHeap implements MyIHeap{
                 return i;
         }
         position++;
-        return position - 1;
+        return position;
     }
 
     @Override
