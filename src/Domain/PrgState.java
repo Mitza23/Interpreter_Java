@@ -3,6 +3,7 @@ package Domain;
 import Domain.ADT.*;
 import Domain.Exceptions.MyException;
 import Domain.Statements.IStmt;
+import Domain.Types.Type;
 import Domain.Values.Value;
 
 import java.io.BufferedReader;
@@ -63,6 +64,7 @@ public class PrgState implements Clonable<PrgState> {
         this.fileTable = fileTable;
         exeStack.push(stmt);
         this.heap = new MyHeap();
+        stmt.typecheck(new MyDictionary<String, Type>());
     }
 
     public MyIStack<IStmt> getStk(){

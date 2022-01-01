@@ -11,10 +11,7 @@ import Repository.IRepository;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.Callable;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
+import java.util.concurrent.*;
 import java.util.stream.Collectors;
 
 public class Controller {
@@ -70,7 +67,7 @@ public class Controller {
         return heapContent.entrySet()
                 .stream()
                 .filter(e -> symTableAddr.contains(e.getKey()) || heapAddr.contains(e.getKey()))
-                .collect(Collectors.toMap(HashMap.Entry::getKey, HashMap.Entry::getValue));
+                .collect(Collectors.toMap(ConcurrentHashMap.Entry::getKey, ConcurrentHashMap.Entry::getValue));
     }
 
     Map<Integer, Value> conservativeGarbageCollector(List<PrgState> prgList) {
@@ -84,7 +81,7 @@ public class Controller {
         return heapContent.entrySet()
                 .stream()
                 .filter(e -> symTableAddr.contains(e.getKey()) || heapAddr.contains(e.getKey()))
-                .collect(Collectors.toMap(HashMap.Entry::getKey, HashMap.Entry::getValue));
+                .collect(Collectors.toMap(ConcurrentHashMap.Entry::getKey, ConcurrentHashMap.Entry::getValue));
     }
 
     List<Integer> getAddrFromSymTable(Collection<Value> symTableValues) {

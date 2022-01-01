@@ -4,13 +4,14 @@ import Domain.Values.Value;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MyHeap implements MyIHeap{
     Map<Integer, Value> map;
     int position;
 
     public MyHeap() {
-        map = new HashMap<Integer, Value>();
+        map = new ConcurrentHashMap<Integer, Value>();
         this.position = 1;
     }
 
@@ -20,7 +21,7 @@ public class MyHeap implements MyIHeap{
     }
 
     @Override
-    public int nextFree() {
+    public synchronized int nextFree() {
         for (int i = 1; i <= position; i++) {
             if (!isDefined(i))
                 return i;

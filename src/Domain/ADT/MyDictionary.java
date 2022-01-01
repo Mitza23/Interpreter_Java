@@ -4,12 +4,13 @@ import Domain.Clonable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class MyDictionary<K, V> implements MyIDictionary<K, V> {
-    HashMap<K, V> map;
+    ConcurrentHashMap<K, V> map;
 
     public MyDictionary() {
-        map = new HashMap<K, V>();
+        map = new ConcurrentHashMap<K, V>();
     }
 
     @Override
